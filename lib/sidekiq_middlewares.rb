@@ -1,5 +1,4 @@
 require "sidekiq_middlewares/version"
-
 module SidekiqMiddlewares
-  # Your code goes here...
+  autoload :Benchmarker, "sidekiq_middlewares/benchmarker"
 end
