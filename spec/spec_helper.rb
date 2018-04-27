@@ -1,5 +1,6 @@
 require "bundler/setup"
 require "sidekiq_middlewares"
+require_relative 'support/log_with_matcher'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

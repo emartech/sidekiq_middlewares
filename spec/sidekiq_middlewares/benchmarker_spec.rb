@@ -6,22 +6,6 @@ RSpec.describe SidekiqMiddlewares::Benchmarker do
   let(:opts) { { logger: logger } }
   let(:logger) { instance_double(Logger) }
 
-  define :log_with do |logger, level, message|
-    supports_block_expectations
-
-    match do |actual|
-      expect(logger).to receive(level).with(message)
-      execute_with_error_handling(&actual)
-      true
-    end
-
-    def execute_with_error_handling
-      yield
-    rescue
-      nil
-    end
-  end
-
   before { allow(::Process).to receive(:clock_gettime).with(Process::CLOCK_MONOTONIC).and_return(1.5, 3.5) }
 
   describe '#call' do
