@@ -1,6 +1,9 @@
 language: ruby
 script: rspec spec -f d
 
+before_install:
+  - gem update --system --no-document
+
 install:
   - gem update bundler
   - bundle install
