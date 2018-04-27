@@ -12,15 +12,16 @@ RSpec.describe SidekiqMiddlewares::ErrorLogger do
     end
 
     context 'when the call chain raises an error' do
+      subject(:call_with_error) { middleware.call { raise custom_error } }
       let(:custom_error) { StandardError.new 'test error' }
 
       it 'logs the error' do
-        expect { subject.call { raise custom_error } }.to log_with(logger, :error, custom_error)
+        expect { call_with_error }.to log_with(logger, :error, custom_error)
       end
 
       it 'raises the error' do
         logger.as_null_object
-        expect { subject.call { raise custom_error } }.to raise_error custom_error
+        expect { call_with_error }.to raise_error custom_error
       end
     end
   end
