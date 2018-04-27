@@ -22,9 +22,7 @@ RSpec.describe SidekiqMiddlewares::Benchmarker do
     end
   end
 
-  let(:duration) { rand(1..5) }
-  let(:benchmark_measure) { double(:benchmark_measure, real: duration) }
-  before { allow(::Benchmark).to receive(:measure).and_yield.and_return(benchmark_measure) }
+  before { allow(::Process).to receive(:clock_gettime).with(Process::CLOCK_MONOTONIC).and_return(1.5, 3.5) }
 
   describe '#call' do
     subject(:call_result) { middleware.call(worker, job, queue, &next_middleware_call) }
@@ -51,7 +49,7 @@ RSpec.describe SidekiqMiddlewares::Benchmarker do
         'worker_class' => 'SpikeWorker',
         'created_at' => 1_492_689_350,
         'enqueued_at' => 1_492_689_350,
-        'execution_time_sec' => duration
+        'execution_time_sec' => 2.0
       }
     end
 
@@ -61,6 +59,13 @@ RSpec.describe SidekiqMiddlewares::Benchmarker do
       before { opts[:formatter] = proc { |msg| YAML.dump(msg) } }
 
       it { expect { subject }.to log_with(logger, :info, YAML.dump(expected_log_message)) }
+    end
+
+    context 'when the call chain raises an error' do
+      let(:next_middleware_call) { proc { raise StandardError } }
+      it 'logs the message with 0 execution time' do
+        expect { subject }.to log_with(logger, :info, expected_log_message)
+      end
     end
   end
 end
