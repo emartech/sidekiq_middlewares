@@ -1,7 +1,8 @@
 require 'logger'
 
 RSpec.describe SidekiqMiddlewares::ErrorLogger do
-  subject(:middleware) { described_class.new logger }
+  subject(:middleware) { described_class.new(opts) }
+  let(:opts) { { logger: logger } }
   let(:logger) { instance_double(Logger) }
 
   describe '#call' do
