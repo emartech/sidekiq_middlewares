@@ -1,5 +1,5 @@
 language: ruby
-script: rspec spec -f d
+script: bundle exec rake
 
 before_install:
   - gem update --system --no-document
