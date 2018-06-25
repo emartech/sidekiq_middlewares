@@ -25,6 +25,7 @@ module SidekiqMiddlewares
         'jid' => job['jid'],
         'queue' => job['queue'],
         'worker_class' => job['class'],
+        'args' => job['args'].inspect,
         'created_at' => job['created_at'],
         'enqueued_at' => job['enqueued_at']
       }

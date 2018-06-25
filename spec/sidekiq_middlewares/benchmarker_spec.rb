@@ -14,7 +14,7 @@ RSpec.describe SidekiqMiddlewares::Benchmarker do
     let(:job) do
       {
         'class' => 'SpikeWorker',
-        'args' => [1_492_689_350, 0],
+        'args' => [123, 'test'],
         'retry' => true,
         'queue' => queue,
         'backtrace' => true,
@@ -31,6 +31,7 @@ RSpec.describe SidekiqMiddlewares::Benchmarker do
         'jid' => '709d26b3199e1d730e6a96e1',
         'queue' => queue,
         'worker_class' => 'SpikeWorker',
+        'args' => '[123, "test"]',
         'created_at' => 1_492_689_350,
         'enqueued_at' => 1_492_689_350,
         'execution_time_sec' => 2.0
