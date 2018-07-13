@@ -9,6 +9,7 @@ Gem::Specification.new do |spec|
   spec.version               = SidekiqMiddlewares::VERSION
   spec.authors               = ['Emarsys Smart Insight Team']
   spec.email                 = ['smart-insight-dev@emarsys.com']
+  spec.license               = 'MIT'
 
   spec.summary               = 'Commonly reused Sidekiq Middlewares such as Benchmarker'
   spec.description           = 'Commonly reused Sidekiq Middlewares such as Benchmarker'
